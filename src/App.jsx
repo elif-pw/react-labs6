@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react'
 import MyComponent from "./MyComponent";
+import AddEmployee from "./AddEmployee";
 // const App = () => (
 //   <h1>Minimal React</h1>
 // )
@@ -10,8 +11,12 @@ class App extends Component{
         super();
         this.state={
             employees:[],
-            isFetching:false
+            isFetching:false,
+            addClicked: false
         }
+    }
+    onaddclick=(e)=>{
+        this.setState({addClicked:true})
     }
 
     componentDidMount(){
@@ -22,11 +27,18 @@ class App extends Component{
             .then(()=>this.setState({isFetching:false}));
     }
 
+    toggleonclick=hide =>{
+        hide? this.setState({addClicked:false}) :this.setState({addClicked:true})
+    }
+
     render(){
         return(
             <div>
                 {this.state.employees.map(empl=><li key={empl.id}>{empl.name}</li>)}
                 <MyComponent isFetching={this.state.isFetching}/>
+
+                <button onClick={this.onaddclick}>Add Employee</button>
+                {this.state.addClicked? <AddEmployee toggle={this.toggleonclick}/> : ''}
             </div>
 
         )
