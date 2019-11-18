@@ -5,103 +5,129 @@ class AddEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newUser: {
-                id: '',
-                isActive: false,
-                age: '',
-                name: '',
-                company: '',
-                email: '',
 
-            },
-            hide:true,
+            id: '',
+            isActive: false,
+            age: 0,
+            name: '',
+            company: '',
+            email: '',
+            hide: true,
+            isSaving: false
 
 
         }
+        this.onChangeEvent = this.onChangeEvent.bind(this);
+        this.onActivityChanged = this.onActivityChanged.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
-    /* This life cycle hook gets executed when the component mounts */
+    generateid() {
+        //1st trial
+        //  return [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join('').toLowerCase()
+        //2nd trial
+        //   function chr4(){
+        //       return Math.random().toString(16).slice(-4);
+        //   }
+        //   return chr4() + chr4() +
+        //       '-' + chr4() +
+        //       '-' + chr4() +
+        //       '-' + chr4() +
+        //       '-' + chr4() + chr4() + chr4();
+        (Date.now().toString(36) + Math.random().toString(36).substr(1, 24)).toLowerCase()
+    }
 
-    handleFormSubmit= async (event) => {
+    handleFormSubmit() {
+        this.setState({id: this.generateid()})
+        this.setState({isSaving: true});
         event.preventDefault();
-        //this.props.onSubmit(resp.data);
         fetch("http://localhost:3004/employees", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                id: `${Math.random()
-                    .toString(36)
-                    .substring(7)}`,
-                name: this.name.value,
-                company: this.company.value,
-                age: this.age.value,
-                email: this.email.value,
-                isActive: this.isActive.checked
+                "id": this.state.id,
+                "name": this.state.name,
+                "company": this.state.company,
+                "age": this.state.age,
+                "email": this.state.email,
+                "isActive": this.state.isActive
             })
         })
+            .then(response => response.json())
+            .then(() => this.props.update());
 
     };
 
 
-    onActivityChanged= (e)=> {
+    onChangeEvent(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
+
+    onActivityChanged = (e) => {
         this.setState({
             isActive: e.currentTarget.value
         });
     }
 
-    handleCancel=e=>{
-        this.setState({hide:true});
+    handleCancel = e => {
+        this.setState({hide: true});
         this.props.toggle(this.state.hide);
     }
 
     render() {
         return (
-            <form className="container" onSubmit={this.handleFormSubmit}>
-                <fieldset>
-                <h3 className="formtext">Form </h3>
-                <label>Is User Active?</label>
-                <input type="radio" name="isActive"
-                       value={this.state.isActive}
-                       // checked={this.state.isActive}
-                       onChange={this.onActivityChanged} />
-                <br/>
-                    <br/>
-                <input
-                    type="number"
-                    value={this.state.age}
-                    placeholder="Enter Age"
-                    required
-                />
-                <br/><br/>
-                <input
-                    type="text"
-                    value={this.state.name}
-                    placeholder="Enter Name"
-                    required
-                />
-                <br/>
-                    <br/>
-                <input
-                    type="text"
-                    value={this.state.company}
-                    placeholder="Enter Company Name"
-                    required
-                />
-                <br/>
-                    <br/>
-                <input
-                    type="email"
-                    value={this.state.email}
-                    placeholder="Enter email"
-                    required
-                />
-                    <br/><br/>
-                <button type="submit">Submit</button>
-                <br/><br/>
-                <button   type="button"
-                          onClick={this.handleCancel}>Cancel</button>
-                </fieldset>
-            </form>
+            <div>
+                {this.state.isSaving ? <b>Saving...</b> : ''}
+                <form className="container" onSubmit={this.handleFormSubmit}>
+                    <fieldset>
+                        <h3 className="formtext">Form </h3>
+                        <label>Is User Active?</label>
+                        <input type="radio" name="isActive"
+                               onChange={this.onActivityChanged}/>
+                        <br/>
+                        <br/>
+                        <input
+                            type="number"
+                            name='age'
+                            placeholder="Enter Age"
+                            onChange={this.onChangeEvent}
+                            required
+                        />
+                        <br/><br/>
+                        <input
+                            type="text"
+                            name='name'
+                            placeholder="Enter Name"
+                            onChange={this.onChangeEvent}
+                            required
+                        />
+                        <br/>
+                        <br/>
+                        <input
+                            type="text"
+                            name='company'
+                            placeholder="Enter Company Name"
+                            onChange={this.onChangeEvent}
+                            required
+                        />
+                        <br/>
+                        <br/>
+                        <input
+                            type="email"
+                            name='email'
+                            placeholder="Enter email"
+                            onChange={this.onChangeEvent}
+                            required
+                        />
+                        <br/><br/>
+                        <button type="submit">Submit</button>
+                        <br/><br/>
+                        <button type="button"
+                                onClick={this.handleCancel}>Cancel
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
         );
     }
 
