@@ -1,3 +1,6 @@
+
+https://ozdemire-lab6.netlify.com
+
 # react-minimal
 React Minimal template
 
