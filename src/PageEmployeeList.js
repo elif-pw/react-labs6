@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PageEmployee from "./PageEmployee";
-
+import { withRouter } from "react-router-dom";
 
 import {
     BrowserRouter as Router,
@@ -78,10 +78,10 @@ class PageEmployeeList extends Component {
                 </div>)}
                 <br/>
                 <Link to="/new">
-                <button onClick={()=>this.props.history.push("/new")}>Create new employee</button>
+                <button >Create new employee</button>
                 </Link>
                     <br/>
-                {this.state.addClicked ? <PageEmployee toggle={this.toggleonclick} update={this.update}/> : ''}
+                {this.state.addClicked ? <PageEmployee toggle={this.toggleonclick} /> : ''}
 
             </div>
 
@@ -91,4 +91,4 @@ class PageEmployeeList extends Component {
 
 }
 
-export default PageEmployeeList
+export default withRouter(PageEmployeeList)

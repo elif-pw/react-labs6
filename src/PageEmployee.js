@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import {withRouter} from 'react-router-dom';
 
 import {
     BrowserRouter as Router,
@@ -37,7 +38,7 @@ class PageEmployee extends Component {
     handleFormSubmit() {
         this.setState({id: this.generateid()})
         this.setState({isSaving: true});
-        event.preventDefault();
+       // event.preventDefault();
         fetch("http://localhost:3004/employees", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -52,7 +53,8 @@ class PageEmployee extends Component {
         })
             .then(response => response.json())
             .then(()=>this.props.history.push("/"))
-            .then(() => this.props.update());
+           // .then(() => this.props.update())
+        ;
 
     };
 
@@ -118,9 +120,7 @@ class PageEmployee extends Component {
                             required
                         />
                         <br/><br/>
-                        <Link to="/">
                         <button type="submit" onClick={this.handleFormSubmit}>Submit</button>
-                        </Link>
                         <br/><br/>
                         <Link to="/">
                         <button type="button"
@@ -136,4 +136,4 @@ class PageEmployee extends Component {
 
 }
 
-export default PageEmployee;
+export default withRouter(PageEmployee)
