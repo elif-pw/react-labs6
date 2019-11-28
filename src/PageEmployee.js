@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-class AddEmployee extends Component {
+class PageEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,18 +23,7 @@ class AddEmployee extends Component {
     }
 
     generateid() {
-        //1st trial
-        //  return [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join('').toLowerCase()
-        //2nd trial
-        //   function chr4(){
-        //       return Math.random().toString(16).slice(-4);
-        //   }
-        //   return chr4() + chr4() +
-        //       '-' + chr4() +
-        //       '-' + chr4() +
-        //       '-' + chr4() +
-        //       '-' + chr4() + chr4() + chr4();
-        (Date.now().toString(36) + Math.random().toString(36).substr(1, 24)).toLowerCase()
+          (Date.now().toString(36) + Math.random().toString(36).substr(1, 24)).toLowerCase()
     }
 
     handleFormSubmit() {
@@ -134,4 +123,4 @@ class AddEmployee extends Component {
 
 }
 
-export default AddEmployee;
+export default PageEmployee;
