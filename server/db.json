@@ -111,14 +111,6 @@
       "name": "Raquel Walter",
       "company": "PROSURE",
       "email": "raquelwalter@prosure.com"
-    },
-    {
-      "id": "5dc9bdc6759d1f047616ed7e",
-      "isActive": true,
-      "age": 34,
-      "name": "Beulah Michael",
-      "company": "EXOSIS",
-      "email": "beulahmichael@exosis.com"
     }
   ]
 }

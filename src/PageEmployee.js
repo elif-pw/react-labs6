@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+
+
 class PageEmployee extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +51,7 @@ class PageEmployee extends Component {
             })
         })
             .then(response => response.json())
+            .then(()=>this.props.history.push("/"))
             .then(() => this.props.update());
 
     };
@@ -109,11 +118,15 @@ class PageEmployee extends Component {
                             required
                         />
                         <br/><br/>
-                        <button type="submit">Submit</button>
+                        <Link to="/">
+                        <button type="submit" onClick={this.handleFormSubmit}>Submit</button>
+                        </Link>
                         <br/><br/>
+                        <Link to="/">
                         <button type="button"
-                                onClick={this.handleCancel}>Cancel
+                                onClick={()=>this.props.history.push("/")}>Cancel
                         </button>
+                        </Link>
                     </fieldset>
                 </form>
             </div>

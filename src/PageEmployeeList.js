@@ -1,5 +1,13 @@
 import React, {Component} from 'react'
-import AddEmployee from "./PageEmployee";
+import PageEmployee from "./PageEmployee";
+
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 
 class PageEmployeeList extends Component {
@@ -58,17 +66,22 @@ class PageEmployeeList extends Component {
             <div>
                 {this.state.isFetching ? <b>Loading...</b> :
                     <h3>In total there are {this.state.employees.length} employees</h3>}
-                {this.state.employees.map(empl => <li key={empl.id}> {this.state.deletingId === empl.id ?
+                {this.state.employees.map(empl => <div> {this.state.deletingId === empl.id ?
                     <b>Deleting...</b> :
-                    <div>{empl.name} {empl.company} {empl.id} {empl.age} {empl.isActive ? 'active' : 'not active'}
+                    <div><b style={{ color: 'red' }}>{empl.name}  </b>
+                        <b style={{ color: 'black' }}>{empl.company}  </b>
+                        <b style={{ color: 'grey' }}>{  empl.id}  </b>
+                        <b style={{ color: 'green' }}>{empl.age}  </b>
+                        <b style={{ color: 'orange' }}>{empl.isActive ? 'active' : 'not active'}  </b>
                         <button onClick={this.deleteHandler.bind(this, empl.id)}>Delete</button>
                     </div>}
-                </li>)}
+                </div>)}
                 <br/>
-                <button onClick={this.onaddclick}>Add Employee</button>
-                <br/>
-                {this.state.addClicked ? <AddEmployee toggle={this.toggleonclick} update={this.update}/> : ''}
-
+                <Link to="/new">
+                <button onClick={()=>this.props.history.push("/new")}>Create new employee</button>
+                </Link>
+                    <br/>
+                {this.state.addClicked ? <PageEmployee toggle={this.toggleonclick} update={this.update}/> : ''}
 
             </div>
 
