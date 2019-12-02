@@ -53,7 +53,6 @@ class PageEmployee extends Component {
         })
             .then(response => response.json())
             .then(()=>this.props.history.push("/"))
-           // .then(() => this.props.update())
         ;
 
     };
@@ -69,10 +68,7 @@ class PageEmployee extends Component {
         });
     }
 
-    handleCancel = e => {
-        this.setState({hide: true});
-        this.props.toggle(this.state.hide);
-    }
+
 
     render() {
         return (

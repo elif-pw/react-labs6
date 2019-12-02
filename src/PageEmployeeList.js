@@ -16,16 +16,12 @@ class PageEmployeeList extends Component {
         this.state = {
             employees: [],
             isFetching: false,
-            addClicked: false,
             deletingId: ''
         }
         this.update = this.update.bind(this);
         this.deleteHandler = this.deleteHandler.bind(this);
     }
 
-    onaddclick = (e) => {
-        this.setState({addClicked: true})
-    }
 
     componentDidMount() {
         this.update();
@@ -39,14 +35,9 @@ class PageEmployeeList extends Component {
             .then(response => response.json())
             .then(data => this.setState({employees: data}))
             .then(() => this.setState({isFetching: false}))
-            .then(() => this.toggleonclick(true))
         ;
 
 
-    }
-
-    toggleonclick = hide => {
-        hide ? this.setState({addClicked: false}) : this.setState({addClicked: true})
     }
 
     deleteHandler(id) {
@@ -81,8 +72,6 @@ class PageEmployeeList extends Component {
                 <button >Create new employee</button>
                 </Link>
                     <br/>
-                {this.state.addClicked ? <PageEmployee toggle={this.toggleonclick} /> : ''}
-
             </div>
 
         )
